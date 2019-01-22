@@ -1,1 +1,1 @@
-idea:players will create their roles in the scripts and kp will post their scipts on the app. And we offer the platform and some functions for the game.
+idea:user should fulfill their personal information to finish their first step on the website.
