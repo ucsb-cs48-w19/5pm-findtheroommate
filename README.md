@@ -1,1 +1,1 @@
-# 5pm-scripts
+use flask run command to run the server
