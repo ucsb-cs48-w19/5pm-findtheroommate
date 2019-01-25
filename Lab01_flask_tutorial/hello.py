@@ -1,11 +1,12 @@
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
 #Home Page part
 @app.route('/')
 def main():
-    return 'Home Page'
+    return render_template('home_page.html')
 
 #Sign Up Page part
 @app.route('/signup')
