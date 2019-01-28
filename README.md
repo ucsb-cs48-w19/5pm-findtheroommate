@@ -35,8 +35,7 @@ Create an environment
 Create a project folder and a venv folder within:
 
 ```
-mkdir myproject
-cd myproject
+cd 5pm-findtheroommate
 python3 -m venv venv
 ```
 
