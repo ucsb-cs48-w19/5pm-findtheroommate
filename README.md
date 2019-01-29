@@ -21,45 +21,49 @@
 * Configure Virtual Environment  
     * venv is a built-in program for virtual environment that comes with installing python 3.7.2
     * in your terminal, after you are in the directory where you want the folder for this app exist, type in the following one by one
-    '''mkdir find-the-roommate
+    ```mkdir find-the-roommate
         cd find-the-roommate
-        python3 -m venv venv'''
+        python3 -m venv venv
+    ```
     * if you are using windows instead of Mac/Linux, swap out the third line above to 
-    '''py -3 -m venv venv'''  
+    ```py -3 -m venv venv``` 
 * Activate the environment  
     * right now you should be inside the folder named find-the-roommate
     * type in your terminal the following command  
-    '''. venv/bin/activate'''
+    ```. venv/bin/activate```
     * if you are using windows instead of Mac/Linux, do the below instead
-    '''venv\Scripts\activate'''
+    ```venv\Scripts\activate```
     * now you should see (venv) before your normal terminal prompt  
 
 * Installed flask
     * stay where you are, and type
-    '''pip install flask'''
+    ```pip install flask```
 
-Run the program
+* Run the program  
+    * after succesful installation of flask, type the below, and hit enter
+    ```python hello.py```
+    * We currently use hello.py as a place holder for the real files
+    * You should see "running on http://....."
+    * Open a new web browser, and paste whatever is after the word on into the url area
+    * At this point, you should see "Hello World" on the screen
 
-    Open the terminal and type 'export FLASK_APP=hello.py'
-    Type 'export FLASK_ENV=development' (optional)
-    Type 'flask run' to run the program
+## Functionality
 
-Functionality
-
-TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section, and showcase your features.
+* TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section, and showcase your features.
 Known Problems
 
-TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
-Contributing
+## known problems
+* TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
 
-TODO: Leave the steps below if you want others to contribute to your project.
+## Contributing
 
-    Fork it!
-    Create your feature branch: git checkout -b my-new-feature
-    Commit your changes: git commit -am 'Add some feature'
-    Push to the branch: git push origin my-new-feature
-    Submit a pull request :D
+* TODO: Leave the steps below if you want others to contribute to your project.  
+    * Fork it!
+    * Create your feature branch: git checkout -b my-new-feature
+    * Commit your changes: git commit -am 'Add some feature'
+    * Push to the branch: git push origin my-new-feature
+    * Submit a pull request :D
 
-License
+## License
 
-If you haven't already, add a file called LICENSE.txt with the text of the appropriate license. We recommend using the MIT license: https://choosealicense.com/licenses/mit/
+* If you haven't already, add a file called LICENSE.txt with the text of the appropriate license. We recommend using the MIT license: https://choosealicense.com/licenses/mit/
