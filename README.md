@@ -18,10 +18,6 @@ TODO: Write a compelling/creative/informative project description / summary
 
 TODO:
 
-### Gems
-
-TODO: List which gems you added to the project, and the purpose each gem serves in your app.
-
 ### Installation Steps
 
 Install the virtualenv first
