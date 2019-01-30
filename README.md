@@ -11,9 +11,8 @@
 ### Prerequisites  
 * You have a computer that runs on either Mac, Window, or Linux.
 * installed git 
-### Gems
-* Installed Python 3
-* Installed 
+* Installed Python 3.7.2
+* Installed flask
 ### Installation Steps  
 * Installed Python 3  
     * go to https://www.python.org/downloads/, and click download python 3.7.2
