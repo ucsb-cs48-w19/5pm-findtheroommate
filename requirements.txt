@@ -1,9 +1,7 @@
 
 Flask==1.0.2
-flatpak-module-tools==0.8.4
-fros==1.1
-funcsigs==1.0.2
-gpg==1.10.0
+Flask-Cors==3.0.3
+Flask-SQLAlchemy==2.3.2
 gunicorn==19.9.0
 html5lib==0.999999999
 itsdangerous==1.1.0
