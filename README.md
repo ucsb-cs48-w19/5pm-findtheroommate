@@ -49,7 +49,7 @@ Within the activated environment, use the following command to install Flask:
 python3 -m pip install Flask
 ```
 
-Run the program
+To run the program locally
 1. Open the terminal and type 'export FLASK_APP=hello.py'
 2. Type 'export FLASK_ENV=development' (optional)
 3. Type 'python3 -m flask run' to run the program
@@ -80,6 +80,8 @@ https://devcenter.heroku.com/articles/getting-started-with-python
         $ git commit -am "make it better"
         $ git push heroku master
 
+Deploy firebase as database and set environment variable on Heroku
+TBD
 
 ## Functionality
 
