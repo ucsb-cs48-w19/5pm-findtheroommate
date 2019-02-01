@@ -10,9 +10,9 @@
 ## Installation
 ### Prerequisites  
 * You have a computer that runs on either Mac, Window, or Linux.
-* installed git 
-* Installed Python 3.7.2
-* Installed flask
+* installed [git](https://git-scm.com/downloads) 
+* Installed [Python 3.7.2](https://www.python.org/downloads/)
+* Installed flask (through command line, see instructions below)
 ### Installation Steps  
 * Installed Python 3  
     * go to https://www.python.org/downloads/, and click download python 3.7.2
