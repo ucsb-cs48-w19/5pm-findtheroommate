@@ -37,6 +37,8 @@
 * Installed flask
     * stay where you are, and type
     ```pip install flask```
+    * if the above do not work, try this instead
+    ```python -m pip install flask```
 
 * Run the program  
     * after succesful installation of flask, type the below, and hit enter
