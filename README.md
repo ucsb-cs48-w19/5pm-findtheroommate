@@ -50,8 +50,7 @@
 
 ## Functionality
 
-* TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section, and showcase your features.
-Known Problems
+* Display "hello World"
 
 ## known problems
 * TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
