@@ -15,11 +15,30 @@
     <div class="navbar">
         <a href="/" class="navbar-brand">Hello Flask</a>
         <a href="{{ url_for('home') }}" class="navbar-item">Home</a>
-        <a href="{{ url_for('about') }}" class="navbar-item">About</a>
-        <a href="{{ url_for('detail') }}" class="navbar-item">Detail</a> 
+        <a href="{{ url_for('posts') }}" class="navbar-item">Posts</a>
+        <a href="{{ url_for('detail') }}" class="navbar-item">Detail</a>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
+        {% endif %}
+
     </div>
-     
+
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+
     <div class="body-content">
+
         {% block content %}
         {% endblock %}
         <hr />
