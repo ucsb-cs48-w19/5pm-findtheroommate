@@ -2,12 +2,12 @@ import flask
 import firebase_admin
 from firebase_admin import db
 from flask import render_template
-from firebase_admin import credential
+from firebase_admin import credentials
 
 app = flask.Flask(__name__)
 
 firebase_admin.initialize_app({
-    credential: admin.credential.cert({
+    credential: admin.credentials.cert({
     "private_key": process.env.FIREBASE_PRIVATE_KEY,
     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
   }),
