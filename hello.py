@@ -2,7 +2,7 @@ import flask
 import firebase_admin
 from firebase_admin import db
 from flask import render_template
-from firebase_admin import credentials
+from firebase_admin import credential
 
 app = flask.Flask(__name__)
 
@@ -12,7 +12,7 @@ firebase_admin.initialize_app({
     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
   }),
   databaseURL:"https://findtheroommate.firebaseio.com"
-                              });
+});
 HELLO = db.reference('hello')
 
 #Home Page part
