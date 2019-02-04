@@ -3,4 +3,4 @@
 __pycache__/
 venv/
 google-cloud-sdk/
-findtheroommate-firebase-adminsdk-b2xem-031d66f91d.json
+.DS_Store

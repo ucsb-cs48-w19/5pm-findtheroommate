@@ -6,13 +6,11 @@ from firebase_admin import credentials
 
 app = flask.Flask(__name__)
 
-firebase_admin.initialize_app({
-    credential: admin.credentials.cert({
-    "private_key": process.env.FIREBASE_PRIVATE_KEY,
-    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-  }),
-  databaseURL:"https://findtheroommate.firebaseio.com"
-});
+cred = credentials.Cerificate("findtheroommate-firebase-adminsdk-b2xem-031d66f91d.json")
+firebase_admin.initialize_app(cred,options={
+    'databaseURL': "https://findtheroommate.firebaseio.com"
+})
+
 HELLO = db.reference('hello')
 
 #Home Page part
