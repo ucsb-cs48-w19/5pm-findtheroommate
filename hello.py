@@ -18,6 +18,7 @@ temp_credential["client_id"] = str(os.environ.get("client_id"))
 temp_credential["client_email"] = str(os.environ.get("client_email"))
 temp_credential["auth_uri"] = str(os.environ.get("auth_uri"))
 temp_credential["auth_provider_x509_cert_url"] = str(os.environ.get("auth_provider_x509_cert_url"))
+temp_credential["private_key"] = str(os.environ.get("private_key"))
 with open('result.json', 'w') as fp:
     json.dump(temp_credential, fp)
 cred = credentials.Certificate('result.json')
