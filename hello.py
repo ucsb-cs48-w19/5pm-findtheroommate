@@ -23,7 +23,7 @@ temp_credential["private_key"] = str(os.environ.get("private_key"))
 print(temp_credential)
 with open('result.json', 'w') as fp:
     json.dump(temp_credential, fp)
-j = json.dumps(d, indent=4)
+j = json.dumps(temp_credential, indent=4)
 f = open('result.json', 'r')
 print(j,file = f)
 cred = credentials.Certificate('result.json')
