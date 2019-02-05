@@ -25,6 +25,7 @@ with open('result.json', 'w') as fp:
     json.dump(temp_credential, fp)
 j = json.dumps(temp_credential, indent=4)
 f = open('result.json', 'w')
+print("What Happens...")
 print(j,file = f)
 cred = credentials.Certificate('result.json')
 
