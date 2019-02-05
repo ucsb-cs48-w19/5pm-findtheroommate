@@ -22,7 +22,10 @@ print(temp_credential)
 temp_credential["private_key"] = str(os.environ.get("private_key"))
 print(temp_credential)
 with open('result.json', 'w') as fp:
-    json.dump(temp_credential, fp)
+    json.dump(temp_cresdential, fp)
+j = json.dumps(d, indent=4)
+f = open('result.json', 'r')
+print(j,file = f)
 cred = credentials.Certificate('result.json')
 
 firebase_admin.initialize_app(cred,options={
