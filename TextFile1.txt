@@ -62,3 +62,19 @@ _post 是一个sub template 使用include statement 添加： {% include '_post.html' %}
             'body': 'The Avengers movie was so cool!'
         }
     ]
+
+>>> posts = Post.query.all()
+>>> for p in posts:
+...     db.session.delete(p)
+
+db.session.commit()
+
+
+>>> from app import db
+>>> from app.models import User, Post
+
+<a href="{{ url_for('posts') }}" class="navbar-item">Posts</a>
+
+@app.route('/api/data')
+def get_data():
+  return app.send_static_file('data.json')

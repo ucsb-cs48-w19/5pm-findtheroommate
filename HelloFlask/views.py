@@ -23,35 +23,19 @@ def home():
     formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!! # strong 加粗
 
     posts = Post.query.order_by(Post.timestamp.desc()).all()
-    #posts = current_user.all_posts().all()
+
     return render_template("home.html", title='Home Page', posts=posts)
 
 
-@app.route('/api/data')
-def get_data():
-  return app.send_static_file('data.json')
 
-@app.route('/posts')
-def posts():
-    return render_template(
-        "posts.html",
-        detail = {'basic' : 'Currently, just a blank page'},
-        title = "Posts",
-        content = "Posts page for Flask.")
+@app.route('/about_us')
+def about_us():
 
-@app.route('/detail')
-def detail():
-    posts = [
-              {'author': {'username': 'John'}, 
-              'body': 'Beautiful day in Portland!'}, 
-              {'author': {'username': 'Susan'},
-              'body': 'The Avengers movie was so cool!'}
-            ] 
     return render_template(
-        "detail.html",
-         title = "Details",
-         content = "Details of this program.",
-         posts = posts)
+        "about_us.html",
+         title = "About us",
+         content = "Currently, under construction!!"
+         )
          
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -124,10 +108,11 @@ def edit_profile():
 def make_posts():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        post = Post(name=form.name.data, email=form.email.data, gender=form.gender.data, body=form.body.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('home'))
+
     return render_template('make_posts.html', title='Make your Post',
                            form=form)

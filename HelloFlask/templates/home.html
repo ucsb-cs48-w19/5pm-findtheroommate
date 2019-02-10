@@ -5,7 +5,11 @@
 
     {% for post in posts %}
 <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
+    {{ post.author.username }}'s post: <br />
+    <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
+    <b>{{ post.email }}</b> <br />
+    <b>{{ post.gender }}</b> <br />
+    <b>{{ post.body }}</b>
 </p>
     {% endfor %}
 <p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
