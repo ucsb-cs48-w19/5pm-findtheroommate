@@ -12,6 +12,6 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login' #The login page, if name not login then change
 
-from HelloFlask import views, models
+from HelloFlask import views, models, error #error handling
 
-import HelloFlask.views
+#import HelloFlask.views

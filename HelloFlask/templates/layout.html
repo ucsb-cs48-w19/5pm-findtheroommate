@@ -18,8 +18,10 @@
         <a href="{{ url_for('posts') }}" class="navbar-item">Posts</a>
         <a href="{{ url_for('detail') }}" class="navbar-item">Detail</a>
         {% if current_user.is_anonymous %}
+
         <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
         {% else %}
+        <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-item">Profile</a>
         <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
         {% endif %}
 

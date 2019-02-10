@@ -1,0 +1,64 @@
+<meta charset="utf-8" /> # This is for character_type -- union code
+
+<link rel="stylesheet" type="text/css" href="/static/site.css" /> # import style from site.css
+
+<h1>Hi, {{ user.username }}!</h1>
+        {% for post in posts %}
+        <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+        {% endfor %} // 可以用for loop
+
+<h1> 是大加粗。。。
+
+当action设置为空字符串时，表单将被提交给当前地址栏中的URL，即当前页面
+
+
+    <div>
+        Microblog:
+        <a href="/index">Home</a>
+        <a href="/login">Login</a>
+    </div>
+
+db ---> database
+
+
+请记住，flask命令依赖于FLASK_APP环境变量来知道Flask应用入口在哪里。 对于本应用，正如第一章，你需要设置FLASK_APP = microblog.py
+
+timestamp字段将被编入索引，如果你想按时间顺序检索用户动态
+
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}" class="navbar-item">Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}" class="navbar-item">Logout</a>
+        {% endif %}
+
+		//Change from login to logout based on the situation of users
+
+		current_user.is_anonymous ----> True if not login
+
+
+
+		{%if name %}
+<div class="message">
+    <br />Hello there, {{ name }}!</div>
+    {% else %}
+    What's your name? Provide it after /hello/ in the URL.
+    {% endif %}                                            //If statement
+
+
+_post 是一个sub template 使用include statement 添加： {% include '_post.html' %}
+
+//Database 要进env1 folder！！！
+
+<!--<p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
+{% endblock %}-->
+
+    posts = [
+        {
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
+        },
+        {
+            'author': {'username': 'Susan'},
+            'body': 'The Avengers movie was so cool!'
+        }
+    ]
