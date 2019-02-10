@@ -1,8 +1,0 @@
-<meta charset="utf-8" /> # This is for character_type -- union code
-
-<link rel="stylesheet" type="text/css" href="/static/site.css" /> # import style from site.css
-
-<h1>Hi, {{ user.username }}!</h1>
-        {% for post in posts %}
-        <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-        {% endfor %} // ø…“‘”√for loop
