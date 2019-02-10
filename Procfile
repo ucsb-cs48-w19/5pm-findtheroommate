@@ -1,1 +1,1 @@
-web: gunicorn hello:app --preload
+web: gunicorn HelloFlask:app --preload
