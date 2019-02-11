@@ -1,9 +1,49 @@
 <!DOCTYPE html>
+
 {% extends "layout.html" %}
 {% block content %}
-<h1>Make a new post</h1>
-{{ content }}
-<h1>Hi, {{ current_user.username }}!</h1>
-<div><p>{{ post.author.username }} posts: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(cols=40, rows=1) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            {{ form.email.label }}<br>
+            {{ form.email(cols=40, rows=1) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            {{ form.gender.label }}<br>
+            {{ form.gender(cols=40, rows=1) }}<br>
+            {% for error in form.gender.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+	    {{ form.time.label }}<br>
+            {{ form.time(cols=40, rows=1) }}<br>
+            {% for error in form.time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+	    {{ form.location.label }}<br>
+            {{ form.location(cols=40, rows=1) }}<br>
+            {% for error in form.location.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            {{ form.body.label }}<br>
+            {{ form.body(cols=40, rows=8) }}<br>
+            {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+	    
+
+        </p>
+    <p>{{ form.submit() }}</p>
+    </form>
 {% endblock %}
