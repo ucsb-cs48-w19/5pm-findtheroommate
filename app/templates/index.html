@@ -3,17 +3,36 @@
 {% block content %}
     <h1>Hi, {{ current_user.username }}!</h1>
     {% if form %}
-    <form action="" method="post">
+	<form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.post.label }}<br>
-            {{ form.post(cols=32, rows=4) }}<br>
-            {% for error in form.post.errors %}
+            {{ form.name.label }}<br>
+            {{ form.name(cols=40, rows=1) }}<br>
+            {% for error in form.name.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
+
+            {{ form.email.label }}<br>
+            {{ form.email(cols=40, rows=1) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            {{ form.gender.label }}<br>
+            {{ form.gender(cols=40, rows=1) }}<br>
+            {% for error in form.gender.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            {{ form.body.label }}<br>
+            {{ form.body(cols=40, rows=8) }}<br>
+            {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
         </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <p>{{ form.submit() }}</p>
+
     {%endif%}
     {% for post in posts %}
     	{%include '_post.html'%}
