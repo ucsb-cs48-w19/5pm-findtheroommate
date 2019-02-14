@@ -57,11 +57,12 @@ flask run
     ```
     Now leave the console and click the web button.
     Found the code part
-    Turn source code to absolute path of the git repo with the directory 5pm-findtheroommate
+    Turn source code to absolute path of the git repo with the directory 5pm-findtheroommate/app
     Click the WSGI configuration file
     Decomment codes part of flask
     Change the value of path to the absolute path of the repo(same as source code).
-    
+    change from flask_app ... to from app...
+    change the virtulenv path to home/username/.virtualenvs/myvirtualenv
 ## Functionality
 
     MVP product
