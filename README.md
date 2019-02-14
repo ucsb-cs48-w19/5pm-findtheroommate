@@ -2,12 +2,12 @@
 ## Project summary
 ## One-sentence description of the project
 
-A web app for UCSB students to find the next great roommate.
+    A web app for UCSB students to find the next great roommate.
 
 ## Additional information about the project
 
-Did you get a summer internship in a far away city that you feels exicited about? Congrats! Wow, now you have to think about housing. See there is not many good options out there for you. Airbnb is affordable, but do you really wanna live with strangers AND their family? You can look on craglist to find roommates for apartment, but how much trust should you give to the strangers behind the computer screen in a remote city? Renting a studio/apartment by yourself, Sure! Just not much money left after you have worked very hard while your friends are enjoying the beach and the sunlight.
-This is when you turn to find-the-roommate for help! As a UCSB student, say for some reasons (eg. internship, travel) that you need to live in New York for the summer, you can use our app to make a post and find fellow Gauchos who is also interested in New York. Then you can meet them in person, and interact! And you repeat this process until you find the one :) Now you can be assured that you will live with someone you know is not a creep, and clicked with you nicely!
+    Did you get a summer internship in a far away city that you feels exicited about? Congrats! Wow, now you have to think about housing. See there is not many good options out there for you. Airbnb is affordable, but do you really wanna live with strangers AND their family? You can look on craglist to find roommates for apartment, but how much trust should you give to the strangers behind the computer screen in a remote city? Renting a studio/apartment by yourself, Sure! Just not much money left after you have worked very hard while your friends are enjoying the beach and the sunlight.
+    This is when you turn to find-the-roommate for help! As a UCSB student, say for some reasons (eg. internship, travel) that you need to live in New York for the summer, you can use our app to make a post and find fellow Gauchos who is also interested in New York. Then you can meet them in person, and interact! And you repeat this process until you find the one :) Now you can be assured that you will live with someone you know is not a creep, and clicked with you nicely!
 
 ## Installation
 ## Prerequisites
@@ -20,7 +20,7 @@ This is when you turn to find-the-roommate for help! As a UCSB student, say for 
 ## Installation Steps
 
 ### Download python3.7.1
-  Download python from python.org
+    Download python from python.org
 
 ### Create virtualenv
 macos:
@@ -49,26 +49,26 @@ flask run
 ```
 
 ### Deploy on pythonanywhere
-Create a pythonanwhere account on website www.pythonanywhere.com
-Open a console and git clone the repo using http.
-Create virtualenv:
-```
-mkvirtualenv myvirtualenv --python=/usr/bin/python3.7
-```
-Now leave the console and click the web button.
-Found the code part
-Turn source code to absolute path of the git repo with the directory 5pm-findtheroommate
-Click the WSGI configuration file
-Decomment codes part of flask
-Change the value of path to the absolute path of the repo(same as source code).
+    Create a pythonanwhere account on website www.pythonanywhere.com
+    Open a console and git clone the repo using http.
+    Create virtualenv:
+    ```
+    mkvirtualenv myvirtualenv --python=/usr/bin/python3.7
+    ```
+    Now leave the console and click the web button.
+    Found the code part
+    Turn source code to absolute path of the git repo with the directory 5pm-findtheroommate
+    Click the WSGI configuration file
+    Decomment codes part of flask
+    Change the value of path to the absolute path of the repo(same as source code).
     
 ## Functionality
 
-    Display "hello World"
+    MVP product
 
 ## Known problems
 
-Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
+    Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
 
 ## Contributing
 
