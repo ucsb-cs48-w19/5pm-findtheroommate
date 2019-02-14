@@ -1,12 +1,25 @@
-    <table class="table table-hover">
+<style>
+  user{
+      margin-left:70px;
+  }
+  context{
+      margin-left:100px;
+  }
+</style>
+
+<table class="table table-hover">
         <tr>
-            <td>
+          <td>
+	    <user>
                 <a href="{{ url_for('user', username=post.author.username) }}">
                     {{ post.author.username }}
                 </a>
                 says:
                 <br>
-                {{ post.body }}
+		<context>
+                  {{ post.body }}
+		</context>
+		</user>
             </td>
         </tr>
     </table>

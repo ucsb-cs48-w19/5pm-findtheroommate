@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    UCSB_email = StringField('UCSB Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -27,6 +27,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    UCSB_email = StringField('UCSB Email', validators=[DataRequired(), Email()])
     about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
     submit = SubmitField('Submit')
 
