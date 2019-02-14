@@ -2,12 +2,12 @@
 ## Project summary
 ## One-sentence description of the project
 
-    A web app for UCSB students to find the next great roommate.
+A web app for UCSB students to find the next great roommate.
 
 ## Additional information about the project
 
-    Did you get a summer internship in a far away city that you feels exicited about? Congrats! Wow, now you have to think about housing. See there is not many good options out there for you. Airbnb is affordable, but do you really wanna live with strangers AND their family? You can look on craglist to find roommates for apartment, but how much trust should you give to the strangers behind the computer screen in a remote city? Renting a studio/apartment by yourself, Sure! Just not much money left after you have worked very hard while your friends are enjoying the beach and the sunlight.
-    This is when you turn to find-the-roommate for help! As a UCSB student, say for some reasons (eg. internship, travel) that you need to live in New York for the summer, you can use our app to make a post and find fellow Gauchos who is also interested in New York. Then you can meet them in person, and interact! And you repeat this process until you find the one :) Now you can be assured that you will live with someone you know is not a creep, and clicked with you nicely!
+Did you get a summer internship in a far away city that you feels exicited about? Congrats! Wow, now you have to think about housing. See there is not many good options out there for you. Airbnb is affordable, but do you really wanna live with strangers AND their family? You can look on craglist to find roommates for apartment, but how much trust should you give to the strangers behind the computer screen in a remote city? Renting a studio/apartment by yourself, Sure! Just not much money left after you have worked very hard while your friends are enjoying the beach and the sunlight.
+This is when you turn to find-the-roommate for help! As a UCSB student, say for some reasons (eg. internship, travel) that you need to live in New York for the summer, you can use our app to make a post and find fellow Gauchos who is also interested in New York. Then you can meet them in person, and interact! And you repeat this process until you find the one :) Now you can be assured that you will live with someone you know is not a creep, and clicked with you nicely!
 
 ## Installation
 ## Prerequisites
