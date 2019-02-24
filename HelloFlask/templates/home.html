@@ -4,14 +4,22 @@
 <h1>Hi, {{ current_user.username }}!</h1>
 
     {% for post in posts %}
-<p>
+<p style="margin-left:50px;margin-right:40px">
     {{ post.author.username }}'s post: <br />
-    <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
-    <b>{{ post.email }}</b> <br />
-    <b>{{ post.gender }}</b> <br />
-    <b>{{ post.body }}</b>
+    Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
+    Email: <b>{{ post.email }}</b> <br />
+    Gender: <b>{{ post.gender }}</b> <br />
+    Contents: <b>{{ post.body }}</b>
 </p>
     {% endfor %}
+
+    {% if prev_url %}
+<a href="{{ prev_url }}">Newer posts</a>
+    {% endif %}
+    {% if next_url %}
+<a href="{{ next_url }}">Older posts</a>
+    {% endif %}
+
 <p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
 {% endblock %}
 

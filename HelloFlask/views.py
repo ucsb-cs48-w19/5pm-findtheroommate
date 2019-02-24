@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, flash, redirect
 from HelloFlask import app, db
 from datetime import datetime
-from HelloFlask.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm #Profile form, 每个在form创建的form都需要import
-from flask import render_template, flash, redirect
+from HelloFlask.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm #Profile form, 每个在form创建的form都需要import
 from flask_login import current_user, login_user, logout_user, login_required #for logout #for protection of login  
 from HelloFlask.models import User, Post
 from werkzeug.urls import url_parse #for next redirect
+from HelloFlask.email import send_password_reset_email, send_email_confirmation_email
 
 
 @app.before_request #Function executates right after the call for view function
@@ -22,9 +22,18 @@ def home():
     now = datetime.now()
     formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!! # strong 加粗
 
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
+    page = request.args.get('page', 1, type=int)
 
-    return render_template("home.html", title='Home Page', posts=posts)
+    posts = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page, app.config['POSTS_PER_PAGE'], False)
+
+    next_url = url_for('home', page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('home', page=posts.prev_num) \
+        if posts.has_prev else None
+
+    return render_template("home.html", title='Home Page', posts=posts.items, next_url=next_url,
+                           prev_url=prev_url) #paginate object is not iterable, but paginate.items can
 
 
 
@@ -72,7 +81,8 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
+        send_email_confirmation_email(user)
+        flash('Congratulation, A confirmation email has been sent via email.') #改改？？
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -106,6 +116,11 @@ def edit_profile():
 
 @app.route('/make_posts', methods=['GET', 'POST']) #Post page: just a test page
 def make_posts():
+    id = current_user.get_id() #ID是一样的
+    user = User.query.get(id);
+    if not user.confirmed:
+        flash('Please confirm your email first!')
+        return redirect(url_for('home'))
     form = PostForm()
     if form.validate_on_submit():
         post = Post(name=form.name.data, email=form.email.data, gender=form.gender.data, body=form.body.data, author=current_user)
@@ -116,3 +131,51 @@ def make_posts():
 
     return render_template('make_posts.html', title='Make your Post',
                            form=form)
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated: #Check log in
+        return redirect(url_for('home'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('home'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
+
+@app.route('/email_confirmation/<token>', methods=['GET', 'POST'])
+@login_required
+def email_confirmation(token):
+    email = User.verify_email_confirmation_token(token)
+    user = User.query.filter_by(email=email).first_or_404()
+    if not user:
+        return redirect(url_for('home'))
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = True
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+        return redirect(url_for('login'))
+    return render_template('email_confirmation.html')
