@@ -1,7 +1,7 @@
 from app import app
 import os
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     HOST = os.environ.get('SERVER_HOST', 'localhost')
 
     try:
@@ -9,4 +9,4 @@ if __name__ == '__main__':
     except ValueError:
         PORT = 5555
 
-    app.run(HOST, PORT)
+    app.run(HOST, PORT)'''
