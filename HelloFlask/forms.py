@@ -34,6 +34,18 @@ class EditProfileForm(FlaskForm): #About me page
             if user is not None:
                 raise ValidationError('Please use a different username.') #Error Message
 
+class EditPostForm(FlaskForm): #Post Page, 可能有error anyway
+    name = TextAreaField('Name: ', validators=[
+        DataRequired(), Length(min=1, max=40)])
+    email = TextAreaField('Email: ', validators=[
+        DataRequired(), Length(min=1, max=40)])
+    gender = TextAreaField('Gender: ', validators=[
+        DataRequired(), Length(min=1, max=40)])
+    body = TextAreaField('Enter your post: ', validators=[
+        DataRequired(), Length(min=1, max=240)])
+    submit = SubmitField('Submit')
+
+
 
 class PostForm(FlaskForm):
     name = TextAreaField('Name: ', validators=[

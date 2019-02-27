@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from HelloFlask import app, db
 from datetime import datetime
-from HelloFlask.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm #Profile form, 每个在form创建的form都需要import
+from HelloFlask.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm #Profile form, 每个在form创建的form都需要import
 from flask_login import current_user, login_user, logout_user, login_required #for logout #for protection of login  
 from HelloFlask.models import User, Post
 from werkzeug.urls import url_parse #for next redirect
@@ -90,11 +90,42 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
+    posts = Post.query.filter_by(user_id=user.id)
     return render_template('user.html', user=user, posts=posts)
+
+@app.route('/edit_posts/<username>/<id>', methods=['GET', 'POST'])
+@login_required
+def edit_posts(username,id):
+    if(current_user.username != username):
+        return redirect(url_for('home'))
+    user = User.query.filter_by(username=username).first_or_404()
+    posts = Post.query.filter_by(id=id).first_or_404() #要括号！！！！！
+    form = EditPostForm()
+    if form.validate_on_submit():
+        posts.name = form.name.data
+        posts.email = form.email.data
+        posts.gender = form.gender.data
+        posts.body = form.body.data
+        db.session.commit()
+        flash('Your changes have been saved.')
+        return redirect(url_for('user', username=current_user.username))
+    elif request.method == 'GET': #Get 表示用户第一次使用，所以给空白form， 如果==Post 代表input出错（貌似/(ㄒoㄒ)/~~）
+        form.name.data = posts.name
+        form.email.data = posts.email
+        form.gender.data = posts.gender
+        form.body.data = posts.body
+    return render_template('edit_posts.html', user=user, posts=posts, form=form)
+
+@app.route('/delete_post/<username>/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_post(username,id):
+    if(current_user.username != username):
+        return redirect(url_for('home'))
+    target = Post.query.filter_by(id=id).first_or_404()
+    db.session.delete(target)
+    db.session.commit()
+    return redirect(url_for('user', username=current_user.username))
+
 
 
 @app.route('/edit_profile', methods=['GET', 'POST']) #Editing profile page
