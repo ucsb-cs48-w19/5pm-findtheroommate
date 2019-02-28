@@ -44,7 +44,7 @@ class User(UserMixin, db.Model):
     def get_email_confirmation_token(self, expires_in=3600): #duration
         return jwt.encode(
             {'email_confirmation': self.email, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8') #SECRET_KEY 可以换换？
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8') #SECRET_KEY
 
     @staticmethod
     def verify_reset_password_token(token):

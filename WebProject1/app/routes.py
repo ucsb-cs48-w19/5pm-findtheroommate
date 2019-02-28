@@ -13,7 +13,7 @@ from app.email import send_password_reset_email, send_email_confirmation_email
 @login_required
 def index():
     now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!! # strong 加粗
+    formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!
 
     page = request.args.get('page', 1, type=int)
 
@@ -73,7 +73,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         send_email_confirmation_email(user)
-        flash('Congratulation, A confirmation email has been sent via email.') #改改？？
+        flash('Congratulation, A confirmation email has been sent via email.') 
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -90,7 +90,7 @@ def edit_posts(username,id):
     if(current_user.username != username):
         return redirect(url_for('index'))
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(id=id).first_or_404() #要括号！！！！！
+    posts = Post.query.filter_by(id=id).first_or_404() 
     form = EditPostForm()
     if form.validate_on_submit():
         posts.name = form.name.data
@@ -100,7 +100,7 @@ def edit_posts(username,id):
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
-    elif request.method == 'GET': #Get 表示用户第一次使用，所以给空白form， 如果==Post 代表input出错（貌似/(ㄒoㄒ)/~~）
+    elif request.method == 'GET':
         form.name.data = posts.name
         form.email.data = posts.email
         form.gender.data = posts.gender
@@ -142,7 +142,7 @@ def edit_profile():
 
 @app.route('/make_posts', methods=['GET', 'POST']) #Post page: just a test page
 def make_posts():
-    id = current_user.get_id() #ID是一样的
+    id = current_user.get_id() #same ID
     user = User.query.get(id);
     if not user.confirmed:
         flash('Please confirm your email first!')

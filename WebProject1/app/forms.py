@@ -21,19 +21,19 @@ class ResetPasswordForm(FlaskForm): #Used for restting password
 
 class EditProfileForm(FlaskForm): #About me page
     username = StringField('Username', validators=[DataRequired()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)]) #Length requirement, 对应上面的length
+    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)]) #Length requirement, according to length
     submit = SubmitField('Submit')
-    def __init__(self, original_username, *args, **kwargs): #如果是自己，allow action originial_username 自带 variable,指自己
+    def __init__(self, original_username, *args, **kwargs): 
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
 
-    def validate_username(self, username): #如果用户名重复，报错
+    def validate_username(self, username): #report if it has repeat username
         if username.data != self.original_username:
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.') #Error Message
 
-class EditPostForm(FlaskForm): #Post Page, 可能有error anyway
+class EditPostForm(FlaskForm): #Post Page, maybe error anyway
     name = TextAreaField('Name: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     email = TextAreaField('Email: ', validators=[
@@ -43,8 +43,7 @@ class EditPostForm(FlaskForm): #Post Page, 可能有error anyway
     body = TextAreaField('Enter your post: ', validators=[
         DataRequired(), Length(min=1, max=240)])
     submit = SubmitField('Submit')
-
-
+    
 
 class PostForm(FlaskForm):
     name = TextAreaField('Name: ', validators=[
@@ -75,5 +74,3 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Please use a different email address.')
-
-
