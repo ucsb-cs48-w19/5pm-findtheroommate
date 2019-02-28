@@ -3,3 +3,4 @@
 /WebProject1/__pycache__
 /WebProject1/.DS_Store
 /WebProject1/app.db
+*.pyc
