@@ -1,19 +1,21 @@
-from app import app,db
+sfrom app import app,db
 from flask import Flask,render_template,request,flash,url_for,redirect
 from datetime import datetime
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
+from app.forms import SearchForm, LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
 from flask_login import current_user,login_user,logout_user,login_required
 from app.models import User,Post
 from werkzeug.urls import url_parse
 from app.email import send_password_reset_email, send_email_confirmation_email
 
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
     now = datetime.now()
-    formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!! # strong 加粗
+    formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!
 
     page = request.args.get('page', 1, type=int)
 
@@ -25,9 +27,25 @@ def index():
     prev_url = url_for('index', page=posts.prev_num) \
         if posts.has_prev else None
 
-    return render_template("index.html", title='Home Page', posts=posts.items, next_url=next_url,
+    return render_template("index.html", title='Home Page', form = search, posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
+@app.route('/results')
+@login_required
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+    if ((search_string == "Male") or (search_string == "Female")):
+        qry = Post.query.filter_by(gender = search_string)
+    else:
+        qry = Post.query.filter_by(name = search_string)
+    
+    results = qry.all()
+    if not results:
+        flash('No results found!')
+        return redirect('/index')
+    else:
+        return render_template('results.html',results=results)
 
 @app.route('/about_us')
 def about_us():
@@ -73,7 +91,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         send_email_confirmation_email(user)
-        flash('Congratulation, A confirmation email has been sent via email.') #改改？？
+        flash('Congratulation, A confirmation email has been sent via email.') 
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -90,7 +108,7 @@ def edit_posts(username,id):
     if(current_user.username != username):
         return redirect(url_for('index'))
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(id=id).first_or_404() #要括号！！！！！
+    posts = Post.query.filter_by(id=id).first_or_404() 
     form = EditPostForm()
     if form.validate_on_submit():
         posts.name = form.name.data
@@ -100,7 +118,7 @@ def edit_posts(username,id):
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('user', username=current_user.username))
-    elif request.method == 'GET': #Get 表示用户第一次使用，所以给空白form， 如果==Post 代表input出错（貌似/(ㄒoㄒ)/~~）
+    elif request.method == 'GET':
         form.name.data = posts.name
         form.email.data = posts.email
         form.gender.data = posts.gender
@@ -142,7 +160,7 @@ def edit_profile():
 
 @app.route('/make_posts', methods=['GET', 'POST']) #Post page: just a test page
 def make_posts():
-    id = current_user.get_id() #ID是一样的
+    id = current_user.get_id() #same ID
     user = User.query.get(id);
     if not user.confirmed:
         flash('Please confirm your email first!')
