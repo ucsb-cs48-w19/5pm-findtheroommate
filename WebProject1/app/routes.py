@@ -1,4 +1,4 @@
-sfrom app import app,db
+from app import app,db
 from flask import Flask,render_template,request,flash,url_for,redirect
 from datetime import datetime
 from app.forms import SearchForm, LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
