@@ -1,17 +1,19 @@
-from app import app,db
+sfrom app import app,db
 from flask import Flask,render_template,request,flash,url_for,redirect
 from datetime import datetime
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
+from app.forms import SearchForm, LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
 from flask_login import current_user,login_user,logout_user,login_required
 from app.models import User,Post
 from werkzeug.urls import url_parse
 from app.email import send_password_reset_email, send_email_confirmation_email
 
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
+    search = SearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
     now = datetime.now()
     formatted_now = now.strftime("%A, %d %B, %Y at %X") # bad code!
 
@@ -25,9 +27,25 @@ def index():
     prev_url = url_for('index', page=posts.prev_num) \
         if posts.has_prev else None
 
-    return render_template("index.html", title='Home Page', posts=posts.items, next_url=next_url,
+    return render_template("index.html", title='Home Page', form = search, posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
 
+@app.route('/results')
+@login_required
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+    if ((search_string == "Male") or (search_string == "Female")):
+        qry = Post.query.filter_by(gender = search_string)
+    else:
+        qry = Post.query.filter_by(name = search_string)
+    
+    results = qry.all()
+    if not results:
+        flash('No results found!')
+        return redirect('/index')
+    else:
+        return render_template('results.html',results=results)
 
 @app.route('/about_us')
 def about_us():

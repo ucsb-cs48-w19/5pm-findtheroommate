@@ -1,0 +1,11 @@
+{%extends "base.html"%}
+{%block content%}
+{%for results in results%}
+<p style="margin-left:50px;margin-right:40px">
+    Name: <b>{{ results.name }}</b> <br /> <!--<br /> New line-->
+    Email: <b>{{ results.email }}</b> <br />
+    Gender: <b>{{ results.gender }}</b> <br />
+    Contents: <b>{{ results.body }}</b>
+</p>
+{%endfor%}
+{%endblock%}

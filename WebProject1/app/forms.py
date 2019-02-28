@@ -1,8 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import TextAreaField,StringField, PasswordField, BooleanField, SubmitField
+from wtforms import SelectField, TextAreaField,StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo,Length
 from app.models import User
 
+class SearchForm(FlaskForm):
+	choices = [('gender','gender'),('name','name')]
+	select = SelectField('Search for posts:', choices = choices)
+	search = StringField('')
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])

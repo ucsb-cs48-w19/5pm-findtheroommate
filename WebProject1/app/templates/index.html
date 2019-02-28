@@ -12,7 +12,24 @@
     Contents: <b>{{ post.body }}</b>
 </p>
     {% endfor %}
-
+{%with messages = get_flashed_messages()%}
+{%if messages%}
+<ul class=flashes>
+{%for messages in messages%}
+<li>{{messages}}</li>
+{%endfor%}
+</ul>
+{%endif%}
+{%endwith%}
+{%from "_formhelpers.html" import render_field %}
+    <form method=post>
+	<dl>
+	{{render_field(form.select)}}
+	<p>
+	{{render_field(form.search)}}
+	</dl>
+<p><input type=submit value=Search>
+</form>
     {% if prev_url %}
 <a href="{{ prev_url }}">Newer posts</a>
     {% endif %}
