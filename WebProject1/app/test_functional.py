@@ -1,8 +1,8 @@
 # Functional test file
 
 import pytest
-from app import *
 from flask import Flask
+from app import db
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -20,8 +20,13 @@ def test_client():
     # Flask provides a way to test your application by exposing the Werkzeug test Client
     # and handling the context locals for you.
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_pyfile('test.cfg')
     db = SQLAlchemy(app)
+    login = LoginManager(app)
+    login.login_view = 'login'
+    db.init_app(app)
+    login.init_app(app)
+
     migrate = Migrate(app,db)
     testing_client = app.test_client()
     
