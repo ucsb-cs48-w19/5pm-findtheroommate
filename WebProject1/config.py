@@ -13,6 +13,6 @@ class Config(object):
     MAIL_SERVER = 'smtp.gmail.com' #os.environ.get('MAIL_SERVER')
     MAIL_PORT = 587 #int(os.environ.get('MAIL_PORT') or 25)
     MAIL_USE_TLS = 1 #os.environ.get('MAIL_USE_TLS') is not None
-    MAIL_USERNAME = 'wyuguotian@gmail.com' #os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = 'Wangjiqi0414' #os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['wyuguotian@gmail.com']
+    MAIL_USERNAME = 'findtheroommate@gmail.com' #os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = 'Find_cs48' #os.environ.get('MAIL_PASSWORD')
+    ADMINS = ['findtheroommate@gmail.com']
