@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-{% extends "base.html" %}
+<html>
+  {% extends "base.html" %}
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  </head>
 
+  <body>
 {% block content %}
-<h1>Sign In</h1>
+<center><h1>Sign in to FindtheRoommate</h1></center>
+<br>
 <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
+  {{ form.hidden_tag() }}
+  <center>
+  <box>
     <p>
         {{ form.username.label }}<br>
         {{ form.username(size=32) }}<br>
@@ -22,9 +30,14 @@
     <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
     <p>{{ form.submit() }}</p>
     <p>
-        Forgot Your Password?
+        <hhh>Forgot Your Password?</hhh>
         <a href="{{ url_for('reset_password_request') }}">Click to Reset It</a>
     </p>
 </form>
 <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+</box>
+</center>
 {% endblock %}
+</body>
+</html>
+

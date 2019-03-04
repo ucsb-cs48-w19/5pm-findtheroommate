@@ -1,6 +1,27 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
+{% extends "base.html" %}
 {% block content %}
+<head>
+  <title>Register</title>
+  <style>
+    section{
+	max-width:1200px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    p{
+	margin-left:80px;
+    }
+    h1{
+	margin-left:80px;
+    }
+  </style>
+</head>
+
+<body>
+<section>
 <h1>Register</h1>
 <form action="" method="post">
     {{ form.hidden_tag() }}
@@ -34,4 +55,7 @@
     </p>
     <p>{{ form.submit() }}</p>
 </form>
+</section>
+</body>
 {% endblock %}
+</html>

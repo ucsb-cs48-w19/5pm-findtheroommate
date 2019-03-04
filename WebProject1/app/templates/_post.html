@@ -1,17 +1,31 @@
 <!DOCTYPE html>
 
-<table>
+<table style="margin-left:80px">
     <tr valign="top">
-        <td><img src="{{ post.author.avatar(36) }}"></td>
+      <th rowspan="7"><img src="{{ post.author.avatar(36) }}" height="45px" width="45px"></th>
+      <td>
+	{{ post.author.username }}'s post: <br />
+      </td>
+    </tr>
+    <tr>
+      <td>Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line--></td>
+    </tr>
+    <tr>
+      <td>Email: <b>{{ post.email }}</b> <br /></td>
+    </tr>
+    <tr>
+      <td>Gender: <b>{{ post.gender }}</b> <br /></td>
+    </tr>
+    <tr>
+      <td>Contents: <b>{{ post.body }}</b> <br /></td>
+    </tr>
+    <tr>
+      <td><a href="{{ url_for('edit_posts', username=current_user.username, id=post.id) }}">Edit your post</a> <br /> </td>
+    </tr>
+    <tr>
+    <td><a href="{{ url_for('delete_post', username=current_user.username, id=post.id) }}">Delete your post</a></td>
+    </tr>
+    <tr>
+      <br>
     </tr>
 </table>
-<p style="margin-left:50px;margin-right:40px">
-    {{ post.author.username }}'s post: <br />
-    Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
-    Email: <b>{{ post.email }}</b> <br />
-    Gender: <b>{{ post.gender }}</b> <br />
-    Contents: <b>{{ post.body }}</b> <br />
-    <a href="{{ url_for('edit_posts', username=current_user.username, id=post.id) }}">Edit your post</a> <br />
-    <a href="{{ url_for('delete_post', username=current_user.username, id=post.id) }}">Delete your post</a>
-</p>
-
