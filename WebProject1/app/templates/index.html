@@ -1,9 +1,82 @@
 <!DOCTYPE html>
-{% extends "base.html" %}
-{% block content %}
-<h1>Hi, {{ current_user.username }}!</h1>
+<html lang="en">
+  {% extends "base.html" %}
+  {% block content %}
+  <head>
+    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
+    <style>
+*{
+    box-sizing: border-box;
+}
 
-    {% for post in posts %}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header{
+    font-size: 25px;
+    max-width:1200px;
+    margin-left: auto;
+    margin-right:auto;
+    margin-top:30px;
+}
+
+left-sec{
+    float:left;
+    padding:30px;
+    width: 65%;
+}
+
+right-sec{
+    float:left;
+    width:35%;
+    padding:30px;
+}
+
+section{
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+section:after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+@media (max-width: 600px){
+    right-sec, left-sec{
+	width:100%;
+	height:auto;
+    }
+}
+</style>
+</head>
+  
+<body>
+    
+<header>
+  <h1 style="margin-left:80px;margin-top:30px">Hi, {{ current_user.username }}!</h1>
+</header>
+
+<section>
+  <left-sec>
+    
+{%with messages = get_flashed_messages()%}
+{%if messages%}
+<ul class=flashes>
+{%for messages in messages%}
+<li style="margin-left:25px">{{messages}}</li>
+{%endfor%}
+</ul>
+{%endif%}
+{%endwith%}
+
+   {% for post in posts %}
 <p style="margin-left:50px;margin-right:40px">
     {{ post.author.username }}'s post: <br />
     Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
@@ -11,16 +84,11 @@
     Gender: <b>{{ post.gender }}</b> <br />
     Contents: <b>{{ post.body }}</b>
 </p>
-    {% endfor %}
-{%with messages = get_flashed_messages()%}
-{%if messages%}
-<ul class=flashes>
-{%for messages in messages%}
-<li>{{messages}}</li>
-{%endfor%}
-</ul>
-{%endif%}
-{%endwith%}
+ {% endfor %}
+</left-sec>
+    
+ <right-sec>
+<p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
 {%from "_formhelpers.html" import render_field %}
     <form method=post>
 	<dl>
@@ -35,7 +103,11 @@
     {% endif %}
     {% if next_url %}
 <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+{% endif %}
+ </right-sec>
+  
+</section>
 
-<p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
+</body>
 {% endblock %}
+</html>

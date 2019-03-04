@@ -1,11 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
 {%extends "base.html"%}
 {%block content%}
+
+<head>
+  <title>Search Results</title>
+  <style>
+    section{
+	max-width:1200px;
+	margin-left:auto;
+	margin-right:auto;
+    }
+    h1{
+	margin-left:80px;
+    }
+  </style>
+</head>
+
+<body>
+<section>
+<h1>Search Results</h1>
 {%for results in results%}
-<p style="margin-left:50px;margin-right:40px">
+<p style="margin-left:80px">
     Name: <b>{{ results.name }}</b> <br /> <!--<br /> New line-->
     Email: <b>{{ results.email }}</b> <br />
     Gender: <b>{{ results.gender }}</b> <br />
     Contents: <b>{{ results.body }}</b>
 </p>
 {%endfor%}
+</section>
+</body>
 {%endblock%}
+</html>
