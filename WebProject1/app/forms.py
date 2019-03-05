@@ -9,7 +9,7 @@ class SearchForm(FlaskForm):
 	search = StringField('')
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=6, max=30)])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
     
@@ -18,7 +18,7 @@ class ResetPasswordRequestForm(FlaskForm):
     submit = SubmitField('Request Password Reset')
 
 class ResetPasswordForm(FlaskForm): #Used for restting password
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=6, max=30)])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
@@ -41,7 +41,7 @@ class EditPostForm(FlaskForm): #Post Page, maybe error anyway
     name = TextAreaField('Name: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     email = TextAreaField('Email: ', validators=[
-        DataRequired(), Length(min=1, max=40)])
+        DataRequired(), Email(),Length(min=1, max=40)])
     gender = TextAreaField('Gender: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     body = TextAreaField('Enter your post: ', validators=[
@@ -53,7 +53,7 @@ class PostForm(FlaskForm):
     name = TextAreaField('Name: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     email = TextAreaField('Email: ', validators=[
-        DataRequired(), Length(min=1, max=40)])
+        DataRequired(), Email(),Length(min=1, max=40)])
     gender = TextAreaField('Gender: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     body = TextAreaField('Enter your post: ', validators=[

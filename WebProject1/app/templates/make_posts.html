@@ -22,25 +22,25 @@
         {{ form.name.label }}<br>
         {{ form.name(cols=40, rows=1) }}<br>
         {% for error in form.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: red;">[{{ error }}]</span><br />
         {% endfor %}
 
         {{ form.email.label }}<br>
         {{ form.email(cols=40, rows=1) }}<br>
         {% for error in form.email.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: red;">[{{ error }}]</span><br />
         {% endfor %}
 
         {{ form.gender.label }}<br>
         {{ form.gender(cols=40, rows=1) }}<br>
         {% for error in form.gender.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: red;">[{{ error }}]</span><br />
         {% endfor %}
 
         {{ form.body.label }}<br>
         {{ form.body(cols=40, rows=8) }}<br>
         {% for error in form.body.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+        <span style="color: red;">[{{ error }}]</span><br />
         {% endfor %}
 
     </p>
