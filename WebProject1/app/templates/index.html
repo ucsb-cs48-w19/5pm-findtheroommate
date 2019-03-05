@@ -6,6 +6,8 @@
     <title>Home Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
     <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
     <style>
 *{
@@ -65,16 +67,20 @@ section:after{
 
 <section>
   <left-sec>
-    
-   {% for post in posts %}
-<p style="margin-left:50px;margin-right:40px">
-    {{ post.author.username }}'s post: <br />
-    Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
-    Email: <b>{{ post.email }}</b> <br />
-    Gender: <b>{{ post.gender }}</b> <br />
-    Contents: <b>{{ post.body }}</b>
-</p>
- {% endfor %}
+    <div class="container-fluid">
+
+    <div class="col-sm-9">
+           {% for post in posts %}
+      <h4><small>{{ post.author.username }}'s post:</small></h4>
+      <hr>
+      <h3>Name: {{ post.name }}</h3>
+      <h4>E-mail: {{post.email}}</h4>
+      <h4><span class="label label-danger">{{post.gender}}</span>
+      <h4>Content: {{post.body}}</h4>
+      <br><br>
+      {%endfor%}
+      </div>
+</div>
 </left-sec>
     
  <right-sec>

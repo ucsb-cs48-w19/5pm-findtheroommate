@@ -6,6 +6,10 @@
 
 <head>
   <title>Search Results</title>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
   <style>
     section{
 	max-width:1200px;
@@ -21,14 +25,20 @@
 <body>
 <section>
 <h1>Search Results</h1>
-{%for results in results%}
-<p style="margin-left:80px">
-    Name: <b>{{ results.name }}</b> <br /> <!--<br /> New line-->
-    Email: <b>{{ results.email }}</b> <br />
-    Gender: <b>{{ results.gender }}</b> <br />
-    Contents: <b>{{ results.body }}</b>
-</p>
-{%endfor%}
+<div class="container-fluid">
+
+    <div class="col-sm-9">
+    {% for result in results %}
+      <h4><small>{{ result.author.username }}'s post:</small></h4>
+      <hr>
+      <h3>Name: {{ result.name }}</h3>
+      <h4>E-mail: {{result.email}}</h4>
+      <h4><span class="label label-danger">{{result.gender}}</span>
+      <h4>Content: {{result.body}}</h4>
+      <br><br>
+      {%endfor%}
+      </div>
+</div>
 </section>
 </body>
 {%endblock%}
