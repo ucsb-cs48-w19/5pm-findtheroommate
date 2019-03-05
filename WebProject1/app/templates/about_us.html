@@ -1,9 +1,96 @@
 ﻿<!DOCTYPE html>
-
+<html>
     {% extends "base.html" %}
     {% block content %}
-{{ content }}
-<br />
-    This will be the info page of our team!!
-
+    <head>
+      <title>About Us</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+	table,th,td{
+	    border: 1px solid black;
+	    border-collapse: collapse;
+	}
+	th,td{
+	    padding:15px;
+	    text-align:center;
+	}
+	th{
+	    font-size:18px;
+	}
+	header{
+	    padding:20px;
+	    text-align:center;
+	    font-family:'Abril Fatface';
+	    font-size:35px;
+	    color: #3f98e3 ;
+	    text-shadow: 1px 2px #8febf6;
+	}
+	td item{
+	    list-style-type:none;
+	    padding:10px;
+	    text-align:left;
+	}
+      </style>
+    </head>
+    <body>
+      <header>
+	<h2>About us: CS48, 5pm, Find the Roommate</h2>
+      </header>
+      <center>
+	<table style="width:800px">
+	<tr>
+	  <th style="width:40%;text-align:center;">Name</th>
+	  <th>Info</th> 
+	</tr>
+	<tr>
+	  <td>Tengyue Hu</td>
+	  <td>
+	    <item>
+	      <li>Year: 2nd</li>
+	      <li>Major: CS</li>
+	    </item>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Bella Yue</td>
+	  <td>
+	    <item>
+	      <li>Year: 2nd</li>
+	      <li>Major: CS</li>
+	    </item>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Yufei Jin</td>
+	  <td>
+	    <item>
+	      <li>Year: 2nd</li>
+	      <li>Major: CS</li>
+	    </item>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Jiqi Wang</td>
+	  <td>
+	    <item>
+	      <li>Year: 2nd</li>
+	      <li>Major: CS</li>
+	    </item>
+	  </td>
+	</tr>
+	<tr>
+	  <td>Rain Wang</td>
+	  <td>
+	    <item>
+	      <li>Year: 2nd</li>
+	      <li>Major: CS</li>
+	    </item>
+	  </td>
+	</tr>
+      </table>
+      </center>
+    </body>
+    
     {% endblock %}
+</html>
