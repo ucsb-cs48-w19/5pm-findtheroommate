@@ -1,0 +1,333 @@
+from types import MethodType
+
+from hwt.synthesizer.exceptions import IntfLvlConfErr
+from hwt.synthesizer.interfaceLevel.mainBases import UnitBase, InterfaceBase
+from hwt.synthesizer.param import Param
+from hwt.synthesizer.hObjList import HObjList
+from hwt.doc_markers import internal
+
+
+@internal
+def nameAvailabilityCheck(obj, propName, prop):
+    """
+    Check if not redefining property on obj
+    """
+    if getattr(obj, propName, None) is not None:
+        raise IntfLvlConfErr("%r already has property %s old:%s new:%s" % 
+                             (obj, propName, repr(getattr(obj, propName)), prop))
+
+
+@internal
+class MakeParamsShared(object):
+    """
+    All newly added interfaces and units will share all parametes with unit
+    specified in constructor of this object.
+    """
+
+    def __init__(self, unit, exclude, prefix):
+        self.unit = unit
+        self.exclude = exclude
+        self.prefix = prefix
+
+    def __enter__(self):
+        orig = self.unit._setAttrListener
+        self.orig = orig
+        exclude = self.exclude
+        prefix = self.prefix
+
+        def MakeParamsSharedWrap(self, iName, i):
+            if isinstance(i, (InterfaceBase, UnitBase, HObjList)):
+                i._updateParamsFrom(self, exclude=exclude, prefix=prefix)
+            return orig(iName, i)
+
+        self.unit._setAttrListener = MethodType(MakeParamsSharedWrap,
+                                                self.unit)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.unit._setAttrListener = self.orig
+
+
+@internal
+class MakeClkRstAssociations(object):
+    """
+    All newly added interfaces will be associated with clk, rst
+    specified in constructor of this object.
+    """
+
+    def __init__(self, unit, clk=None, rst=None):
+        self.unit = unit
+        self.clk = clk
+        self.rst = rst
+
+    def __enter__(self):
+        orig = self.unit._setAttrListener
+        self.orig = orig
+        clk = self.clk
+        rst = self.rst
+
+        def MakeClkRstAssociationsWrap(self, iName, i):
+            if isinstance(i, (InterfaceBase, HObjList)):
+                i._make_association(clk=clk, rst=rst)
+            return orig(iName, i)
+
+        self.unit._setAttrListener = MethodType(MakeClkRstAssociationsWrap,
+                                                self.unit)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.unit._setAttrListener = self.orig
+
+
+class PropDeclrCollector(object):
+    """
+    Collect properties of this object to containers by specified listeners
+    """
+
+    def _config(self) -> None:
+        """
+        Configure object parameters
+
+        * setup all parameters on this object,
+          use Param class instances to allow use of parameter inheritance
+        * called in __init__ of class
+        """
+        pass
+
+    def _declr(self) -> None:
+        """
+        declarations
+
+        * do all declarations of externally accessible objects there (Interfaces)
+        * _declr method is called after _config
+        * if this object is Unit all interfaces are threaten as externally accessible interfaces
+          if this object is Interface all subinterfaces are loaded
+        """
+        pass
+
+    def _impl(self) -> None:
+        """
+        implementations
+
+        * implement functionality of design there
+        * called after _declr
+        """
+        pass
+
+    @internal
+    def __setattr__(self, attr, value) -> None:
+        """setattr with listener injector"""
+        try:
+            saListerner = self._setAttrListener
+        except AttributeError:
+            super().__setattr__(attr, value)
+            return
+
+        if saListerner:
+            saListerner(attr, value)
+        super().__setattr__(attr, value)
+
+    # configuration phase
+    @internal
+    def _loadConfig(self) -> None:
+        if not hasattr(self, '_params'):
+            self._params = []
+
+        self._setAttrListener = self._paramCollector
+        self._config()
+        self._setAttrListener = None
+
+    @internal
+    def _registerParameter(self, pName, parameter) -> None:
+        """
+        Register Param object on interface level object
+        """
+        nameAvailabilityCheck(self, pName, parameter)
+        # resolve name in this scope
+        try:
+            hasName = parameter._name is not None
+        except AttributeError:
+            hasName = False
+        if not hasName:
+            parameter._name = pName
+        # add name in this scope
+        parameter._registerScope(pName, self)
+
+        if parameter.hasGenericName:
+            parameter.name = pName
+
+        if parameter._parent is None:
+            parameter._parent = self
+
+        self._params.append(parameter)
+
+    def _paramsShared(self, exclude=None, prefix="") -> MakeParamsShared:
+        """
+        Auto-propagate params by name to child components and interfaces
+        Usage:
+
+        .. code-block:: python
+
+            with self._paramsShared():
+                # your interfaces and unit which should share all params with "self" there
+
+        :param exclude: params which should not be shared
+        :param prefix: prefix which should be added to name of child parameters
+            before parameter name matching
+        """
+        return MakeParamsShared(self, exclude=exclude, prefix=prefix)
+
+    def _make_association(self, clk=None, rst=None) -> None:
+        """
+        Associate this object with specified clk/rst
+        """
+        if clk is not None:
+            assert self._associatedClk is None
+            self._associatedClk = clk
+
+        if rst is not None:
+            assert self._associatedRst is None
+            self._associatedRst = rst
+
+    def _associated(self, clk=None, rst=None) -> MakeClkRstAssociations:
+        """
+        associate newly added interfaces to "self" with selected clk, rst
+        (if interface is not associated agents try to find clk/rst by _getAssociatedClk/_getAssociatedRst
+        which will search for any clk/rst on parent recursively)
+        Usage:
+
+        .. code-block:: python
+
+            with self._associated(clk=self.myClk, rst=self.myRst):
+                self.myAxi = AxiStrem()
+                # this interface is associated with myClk and myRst
+                # simulation agents and component builders will use them
+
+
+        :param exclude: params which should not be shared
+        """
+        return MakeClkRstAssociations(self, clk, rst)
+
+    def _updateParamsFrom(self, otherObj:"PropDeclrCollector", updater, exclude:set, prefix:str) -> None:
+        """
+        Update all parameters which are defined on self from otherObj
+
+        :param otherObj: other object which Param instances should be updated
+        :param updater: updater function(self, myParameter, onOtherParameterName, otherParameter)
+        :param exclude: iterable of parameter on otherObj object which should be excluded
+        :param prefix: prefix which should be added to name of paramters of this object before matching
+            parameter name on parent
+        """
+        excluded = set()
+        if exclude is not None:
+            exclude = set(exclude)
+
+        for myP in self._params:
+            pPName = prefix + myP._scopes[self][1]
+            try:
+                otherP = getattr(otherObj, pPName)
+                if not isinstance(otherP, Param):
+                    continue
+            except AttributeError:
+                continue
+
+            if exclude and otherP in exclude:
+                excluded.add(otherP)
+                continue
+            updater(self, myP, otherP)
+        
+        if exclude is not None:
+            # assert that what should be excluded really exists
+            assert excluded == exclude
+
+    # declaration phase
+    @internal
+    def _registerUnit(self, uName, unit):
+        """
+        Register unit object on interface level object
+        """
+        nameAvailabilityCheck(self, uName, unit)
+        assert unit._parent is None
+        unit._parent = self
+        unit._name = uName
+        self._units.append(unit)
+
+    @internal
+    def _registerInterface(self, iName, intf, isPrivate=False):
+        """
+        Register interface object on interface level object
+        """
+        nameAvailabilityCheck(self, iName, intf)
+        assert intf._parent is None
+        intf._parent = self
+        intf._name = iName
+        intf._ctx = self._ctx
+
+        if isPrivate:
+            self._private_interfaces.append(intf)
+            intf._isExtern = False
+        else:
+            self._interfaces.append(intf)
+            intf._isExtern = True
+
+    @internal
+    def _declrCollector(self, name, prop):
+        if name in ["_associatedClk", "_associatedRst"]:
+            object.__setattr__(self, name, prop)
+            return
+
+        if isinstance(prop, InterfaceBase):
+            self._registerInterface(name, prop)
+        elif isinstance(prop, UnitBase):
+            self._registerUnit(name, prop)
+        elif isinstance(prop, HObjList):
+            self._registerArray(name, prop)
+
+    @internal
+    def _registerArray(self, name, items):
+        """
+        Register array of items on interface level object
+        """
+        items._parent = self
+        items._name = name
+        for i, item in enumerate(items):
+            setattr(self, "%s_%d" % (name, i), item)
+
+    # implementation phase
+    @internal
+    def _loadMyImplementations(self):
+        self._setAttrListener = self._implCollector
+        self._impl()
+        self._setAttrListener = None
+
+    @internal
+    def _registerUnitInImpl(self, uName, u):
+        """
+        :attention: unit has to be parametrized before it is registered
+            (some components can change interface by parametrization)
+        """
+        self._registerUnit(uName, u)
+        u._loadDeclarations()
+        self._lazyLoaded.extend(u._toRtl(self._targetPlatform))
+        u._signalsForMyEntity(self._ctx, "sig_" + uName)
+
+    @internal
+    def _registerIntfInImpl(self, iName, i):
+        """
+        Register interface in implementation phase
+        """
+        raise NotImplementedError()
+
+    @internal
+    def _paramCollector(self, pName, prop):
+        if isinstance(prop, Param):
+            self._registerParameter(pName, prop)
+
+    @internal
+    def _implCollector(self, name, prop):
+        if isinstance(prop, InterfaceBase):
+            self._registerIntfInImpl(name, prop)
+        elif isinstance(prop, UnitBase):
+            self._registerUnitInImpl(name, prop)

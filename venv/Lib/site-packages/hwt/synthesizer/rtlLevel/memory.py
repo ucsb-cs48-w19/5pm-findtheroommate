@@ -1,0 +1,49 @@
+from hwt.hdl.assignment import Assignment
+from hwt.hdl.types.typeCast import toHVal
+from hwt.synthesizer.interfaceLevel.mainBases import InterfaceBase
+from hwt.synthesizer.rtlLevel.mainBases import RtlMemoryBase
+from hwt.synthesizer.rtlLevel.rtlSignal import RtlSignal
+
+
+class RtlSyncSignal(RtlMemoryBase, RtlSignal):
+    """
+    Syntax sugar,
+    every write is made to next signal, "next" is assigned
+    to main signal on every clock rising edge
+    """
+
+    def __init__(self, ctx, name, var_type, defVal=None):
+        """
+        :param ctx: context in which is sig. created (instance of RtlNetlist)
+        :param name: suggested name
+        :param var_type: type of signal
+        :param defVal: default value for signal
+            (used as def. val in hdl and for reset)
+        """
+        super().__init__(ctx, name, var_type, defVal)
+        self.next = RtlSignal(ctx, name + "_next", var_type,
+                              nopVal=self, useNopVal=True)
+
+    def __call__(self, source):
+        """
+        assign to signal which is next value of this register
+
+        :return: list of assignments
+        """
+        if isinstance(source, InterfaceBase):
+            source = source._sig
+
+        if source is None:
+            source = self._dtype.fromPy(None)
+        else:
+            source = toHVal(source)
+            source = source._auto_cast(self._dtype)
+
+        a = Assignment(source, self.next)
+
+        return [a]
+
+    def __repr__(self):
+        from hwt.serializer.hwt.serializer import HwtSerializer
+        ctx = HwtSerializer.getBaseContext()
+        return HwtSerializer.SignalItem(self, ctx)

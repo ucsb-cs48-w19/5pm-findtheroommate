@@ -1,0 +1,3 @@
+jinja2
+pyDigitalWaveTools>=0.3
+ipCorePackager>=0.2
