@@ -66,16 +66,6 @@ section:after{
 <section>
   <left-sec>
     
-{%with messages = get_flashed_messages()%}
-{%if messages%}
-<ul class=flashes>
-{%for messages in messages%}
-<li style="margin-left:25px">{{messages}}</li>
-{%endfor%}
-</ul>
-{%endif%}
-{%endwith%}
-
    {% for post in posts %}
 <p style="margin-left:50px;margin-right:40px">
     {{ post.author.username }}'s post: <br />
