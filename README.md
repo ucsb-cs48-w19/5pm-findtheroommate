@@ -48,7 +48,9 @@
 
 ## Functionality
 
-* Display text "Hello, World"
+* Login/Register User
+* Add/Edit/Delete Post
+* Log out
 
 ## known problems
 * TODO: Describe any known issues, bugs, odd behaviors or code smells. Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
