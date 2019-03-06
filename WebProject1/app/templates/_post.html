@@ -2,16 +2,19 @@
 
 <table>
     <tr valign="top">
-        <td><img src="{{ post.author.avatar(36) }}"></td>
+
     </tr>
 </table>
 <p style="margin-left:50px;margin-right:40px">
     {{ post.author.username }}'s post: <br />
-    Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
+    Name: <b>{{ post.name }}</b> <br /><!--<br /> New line-->
     Email: <b>{{ post.email }}</b> <br />
     Gender: <b>{{ post.gender }}</b> <br />
     Contents: <b>{{ post.body }}</b> <br />
-    <a href="{{ url_for('edit_posts', username=current_user.username, id=post.id) }}">Edit your post</a> <br />
-    <a href="{{ url_for('delete_post', username=current_user.username, id=post.id) }}">Delete your post</a>
+    <a href="{{ url_for('view_post', id=post.id) }}">View</a> <br />
+    {% if user == current_user %}
+    <a href="{{ url_for('edit_posts', username=post.author.username, id=post.id) }}">Edit your post</a> <br />
+    <a href="{{ url_for('delete_post', username=post.author.username, id=post.id) }}">Delete your post</a>
+    {% endif %}
 </p>
 

@@ -14,7 +14,7 @@ class ResetPasswordRequestForm(FlaskForm):
     submit = SubmitField('Request Password Reset')
 
 class ResetPasswordForm(FlaskForm): #Used for restting password
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=6, max=35)])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Request Password Reset')
@@ -37,7 +37,7 @@ class EditPostForm(FlaskForm): #Post Page, 可能有error anyway
     name = TextAreaField('Name: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     email = TextAreaField('Email: ', validators=[
-        DataRequired(), Length(min=1, max=40)])
+        DataRequired(), Email(),Length(min=1, max=40)])
     gender = TextAreaField('Gender: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     body = TextAreaField('Enter your post: ', validators=[
@@ -50,18 +50,22 @@ class PostForm(FlaskForm):
     name = TextAreaField('Name: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     email = TextAreaField('Email: ', validators=[
-        DataRequired(), Length(min=1, max=40)])
+        DataRequired(), Email(),Length(min=1, max=40)])
     gender = TextAreaField('Gender: ', validators=[
         DataRequired(), Length(min=1, max=40)])
     body = TextAreaField('Enter your post: ', validators=[
         DataRequired(), Length(min=1, max=240)])
     submit = SubmitField('Submit')
 
+class CommentForm(FlaskForm):
+    content = TextAreaField('Enter your comment:  ', validators=[DataRequired(), Length(min=1, max=40)])
+    submit = SubmitField('Submit')
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=6, max=35)])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')

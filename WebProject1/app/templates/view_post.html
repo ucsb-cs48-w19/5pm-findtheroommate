@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+
+<p style="margin-left:50px;margin-right:40px">
+    {{ posts.author.username }}'s post: <br />
+    Name: <b>{{ posts.name }}</b> <br /> <!--<br /> New line-->
+    Email: <b>{{ posts.email }}</b> <br />
+    Gender: <b>{{ posts.gender }}</b> <br />
+    Contents: <b>{{ posts.body }}</b>
+
+</p>
+
+<hr>
+    {% for comment in comments %}
+          <a href="{{ url_for('user', username=comment.author) }}">{{ comment.author }} </a> says:<br />
+          <b>{{ comment.content }}</b> <br />
+    {% endfor %}
+
+<br />
+<br />
+Leave your comments below!
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(cols=50, rows=2) }}<br> <!--Size-->
+        {% for error in form.content.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p> <!--Submit button-->
+</form>
+{% endblock %}
+

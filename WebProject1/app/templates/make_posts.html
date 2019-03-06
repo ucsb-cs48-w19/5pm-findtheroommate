@@ -1,34 +1,52 @@
-﻿{% extends "base.html" %}
+﻿<!DOCTYPE html>
+<html lang="en">
 
+{% extends "base.html" %}
 {% block content %}
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.name.label }}<br>
-        {{ form.name(cols=40, rows=1) }}<br>
-        {% for error in form.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<head>
+    <title>Make your Post</title>
+    <style>
+        section {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
 
-        {{ form.email.label }}<br>
-        {{ form.email(cols=40, rows=1) }}<br>
-        {% for error in form.email.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<body>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <section>
+            <p style="margin-left:80px">
+                {{ form.name.label }}<br>
+                {{ form.name(cols=40, rows=1) }}<br>
+                {% for error in form.name.errors %}
+                <span style="color: red;">[{{ error }}]</span><br />
+                {% endfor %}
 
-        {{ form.gender.label }}<br>
-        {{ form.gender(cols=40, rows=1) }}<br>
-        {% for error in form.gender.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+                {{ form.email.label }}<br>
+                {{ form.email(cols=40, rows=1) }}<br>
+                {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span><br />
+                {% endfor %}
 
-        {{ form.body.label }}<br>
-        {{ form.body(cols=40, rows=8) }}<br>
-        {% for error in form.body.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+                {{ form.gender.label }}<br>
+                {{ form.gender(cols=40, rows=1) }}<br>
+                {% for error in form.gender.errors %}
+                <span style="color: red;">[{{ error }}]</span><br />
+                {% endfor %}
 
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
+                {{ form.body.label }}<br>
+                {{ form.body(cols=40, rows=8) }}<br>
+                {% for error in form.body.errors %}
+                <span style="color: red;">[{{ error }}]</span><br />
+                {% endfor %}
+
+            </p>
+            <p style="margin-left:80px">{{ form.submit() }}</p>
+    </form>
+    </section>
+</body>
 {% endblock %}
+</html>

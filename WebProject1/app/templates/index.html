@@ -5,11 +5,13 @@
 
     {% for post in posts %}
 <p style="margin-left:50px;margin-right:40px">
-    {{ post.author.username }}'s post: <br />
-    Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
-    Email: <b>{{ post.email }}</b> <br />
-    Gender: <b>{{ post.gender }}</b> <br />
-    Contents: <b>{{ post.body }}</b>
+    <a href="{{ url_for('user', username=post.author.username) }}"> {{ post.author.username }}</a>'s post: <br />
+
+        Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line-->
+        Email: <b>{{ post.email }}</b> <br />
+        Gender: <b>{{ post.gender }}</b> <br />
+        Contents: <b>{{ post.body }}</b> <br />
+        <a href="{{ url_for('view_post', id=post.id) }}">View</a> <br />
 </p>
     {% endfor %}
 

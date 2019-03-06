@@ -1,9 +1,9 @@
 from app import app,db
 from flask import Flask,render_template,request,flash,url_for,redirect
 from datetime import datetime
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetPasswordRequestForm, ResetPasswordForm, EditPostForm, CommentForm
 from flask_login import current_user,login_user,logout_user,login_required
-from app.models import User,Post
+from app.models import User,Post, Comment
 from werkzeug.urls import url_parse
 from app.email import send_password_reset_email, send_email_confirmation_email
 
@@ -113,6 +113,10 @@ def delete_post(username,id):
     if(current_user.username != username):
         return redirect(url_for('index'))
     target = Post.query.filter_by(id=id).first_or_404()
+    comments = Comment.query.filter_by(post_id = target.id).all()
+    for comment in comments:
+        db.session.delete(comment)
+
     db.session.delete(target)
     db.session.commit()
     return redirect(url_for('user', username=current_user.username))
@@ -203,3 +207,18 @@ def email_confirmation(token):
         flash('You have confirmed your account. Thanks!', 'success')
         return redirect(url_for('login'))
     return render_template('email_confirmation.html')
+
+@app.route('/view_post/<id>', methods=['GET', 'POST'])
+@login_required
+def view_post(id):
+    posts = Post.query.filter_by(id=id).first_or_404() #要括号！！！！！
+    comments = Comment.query.filter_by(post_id = posts.id).all()
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, post=posts, author=current_user.username)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment is now live!')
+        return redirect(url_for('view_post', id = id))
+
+    return render_template('view_post.html', posts=posts, comments = comments, form = form)
