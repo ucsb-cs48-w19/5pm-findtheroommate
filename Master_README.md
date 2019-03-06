@@ -42,9 +42,8 @@
 
 * Run the program  
     * after succesful installation of flask, type the below, and hit enter
-    ```export FLASK_APP=findtheroommate.py
-       flask run
-    ```
+    ```export FLASK_APP=findtheroommate.py```
+    ```flask run```
     * use set instead of export on windows
     * You should see "running on http://....."
     * Open a new web browser, and paste whatever is after the word on into the url area
