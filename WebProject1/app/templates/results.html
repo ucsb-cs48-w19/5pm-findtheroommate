@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
   <style>
+
+  .the-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    }
+    
     section{
 	max-width:1200px;
 	margin-left:auto;
@@ -29,7 +35,7 @@
 
     <div class="col-sm-9">
     {% for result in results %}
-      <h4><small>{{ result.author.username }}'s post:</small></h4>
+      <h3><small>{{ result.author.username }}'s post:</small></h3>
       <hr>
       <h3>Name: {{ result.name }}</h3>
       <h4>E-mail: {{result.email}}</h4>

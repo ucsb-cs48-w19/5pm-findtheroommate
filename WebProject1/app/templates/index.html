@@ -10,6 +10,12 @@
 
     <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
     <style>
+
+    .the-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+  }
+
 *{
     box-sizing: border-box;
 }
@@ -71,7 +77,7 @@ section:after{
 
     <div class="col-sm-9">
            {% for post in posts %}
-      <h4><small>{{ post.author.username }}'s post:</small></h4>
+      <h3><small>{{ post.author.username }}'s post:</small></h3>
       <hr>
       <h3>Name: {{ post.name }}</h3>
       <h4>E-mail: {{post.email}}</h4>
