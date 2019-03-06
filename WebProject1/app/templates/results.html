@@ -35,6 +35,7 @@
             <span class="label label-danger">{{result.gender}}</span>
         </h4>
         <h4>Content: {{result.body}}</h4>
+	<h4><a href="{{ url_for('view_post', id=result.id) }}">View</a> </h4>
         <hr>
         <h4 align="right"><small> <a href="{{ url_for('user', username=result.author.username) }}"> {{ result.author.username }}'s post: </a> </small></h4>
         <br><br>
