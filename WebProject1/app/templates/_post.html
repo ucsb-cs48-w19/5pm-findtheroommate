@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 
-<table style="margin-left:80px">
+<table style="margin-left:80px; word-wrap:break-word;word-break:break-all;" width="550">
     <tr valign="top">
-      <th rowspan="7"><img src="{{ post.author.avatar(36) }}" height="45px" width="45px"></th>
-      <td>
-	{{ post.author.username }}'s post: <br />
-      </td>
+        <th rowspan="8"><img src="{{ post.author.avatar(36) }}" height="45px" width="45px"></th>
+        <td>
+            <font size="4">{{ post.author.username }}'s post: </font><br />
+        </td>
     </tr>
     <tr>
-      <td>Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line--></td>
+        <td>Name: <b>{{ post.name }}</b> <br /> <!--<br /> New line--></td>
     </tr>
     <tr>
-      <td>Email: <b>{{ post.email }}</b> <br /></td>
+        <td>Email: <b>{{ post.email }}</b> <br /></td>
     </tr>
     <tr>
-      <td>Gender: <b>{{ post.gender }}</b> <br /></td>
+        <td>Gender: <b>{{ post.gender }}</b> <br /></td>
     </tr>
     <tr>
-      <td>Contents: <b>{{ post.body }}</b> <br /></td>
+        <td>Contents: <b>{{ post.body }}</b> <br /></td>
     </tr>
     <tr>
-      <td><a href="{{ url_for('edit_posts', username=current_user.username, id=post.id) }}">Edit your post</a> <br /> </td>
+        <td><a href="{{ url_for('view_post', id=post.id) }}">View</a> <br /></td>
+    </tr>
+    {% if user == current_user %}
+    <tr>
+        <td><a href="{{ url_for('edit_posts', username=current_user.username, id=post.id) }}">Edit your post</a> <br /> </td>
     </tr>
     <tr>
-    <td><a href="{{ url_for('delete_post', username=current_user.username, id=post.id) }}">Delete your post</a></td>
+        <td><a href="{{ url_for('delete_post', username=current_user.username, id=post.id) }}">Delete your post</a></td>
     </tr>
+    {% endif %}
     <tr>
-      <br>
+        <br>
     </tr>
 </table>

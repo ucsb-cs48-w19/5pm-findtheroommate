@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   {% extends "base.html" %}
   {% block content %}
-  <head>
+<head>
     <title>Home Page</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,99 +10,101 @@
 
     <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
     <style>
-*{
-    box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-header{
-    font-size: 25px;
-    max-width:1200px;
-    margin-left: auto;
-    margin-right:auto;
-    margin-top:30px;
-}
+        header {
+            font-size: 25px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
 
-left-sec{
-    float:left;
-    padding:30px;
-    width: 65%;
-}
+        left-sec {
+            float: left;
+            padding: 30px;
+            width: 65%;
+        }
 
-right-sec{
-    float:left;
-    width:35%;
-    padding:30px;
-}
+        right-sec {
+            float: left;
+            width: 35%;
+            padding: 30px;
+        }
 
-section{
-    max-width:1200px;
-    margin-left:auto;
-    margin-right:auto;
-}
+        section {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-section:after{
-    content:"";
-    display:table;
-    clear:both;
-}
+            section:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
 
-@media (max-width: 600px){
-    right-sec, left-sec{
-	width:100%;
-	height:auto;
-    }
-}
-</style>
+        @media (max-width: 600px) {
+            right-sec, left-sec {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
-  
+
 <body>
-    
-<header>
-  <h1 style="margin-left:80px;margin-top:30px">Hi, {{ current_user.username }}!</h1>
-</header>
 
-<section>
-  <left-sec>
-    <div class="container-fluid">
+    <header>
+        <h1 style="margin-left:58px;margin-top:30px">Hi, {{ current_user.username }}!</h1>
+    </header>
 
-    <div class="col-sm-9">
-           {% for post in posts %}
-      <h4><small>{{ post.author.username }}'s post:</small></h4>
-      <hr>
-      <h3>Name: {{ post.name }}</h3>
-      <h4>E-mail: {{post.email}}</h4>
-      <h4><span class="label label-danger">{{post.gender}}</span>
-      <h4>Content: {{post.body}}</h4>
-      <br><br>
-      {%endfor%}
-      </div>
-</div>
-</left-sec>
-    
- <right-sec>
-<p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
-{%from "_formhelpers.html" import render_field %}
-    <form method=post>
-	<dl>
-	{{render_field(form.select)}}
-	<p>
-	{{render_field(form.search)}}
-	</dl>
-<p><input type=submit value=Search>
-</form>
-    {% if prev_url %}
-<a href="{{ prev_url }}">Newer posts</a>
-    {% endif %}
-    {% if next_url %}
-<a href="{{ next_url }}">Older posts</a>
-{% endif %}
- </right-sec>
-  
-</section>
+    <section>
+        <left-sec>
+            <div class="container-fluid">
+
+                <div class="col-sm-9" style="word-wrap:break-word;word-break:break-all;width:550px" >
+                    {% for post in posts %}
+                    <h3>Name: {{ post.name }}</h3>
+                    <h4>E-mail: {{post.email}}</h4>
+                    <h4>
+                    <span class="label label-danger">{{post.gender}}</span> </h4>
+                    <h4>Content: {{post.body}}</h4>
+                    <h4><a href="{{ url_for('view_post', id=post.id) }}">View</a> </h4>
+                    <hr>
+                    <h4 align="right"><small> <a href="{{ url_for('user', username=post.author.username) }}"> {{ post.author.username }}'s post: </a> </small></h4>
+                    <br><br>
+                        {%endfor%}
+                </div>
+            </div>
+        </left-sec>
+
+        <right-sec>
+            <p><a href="{{ url_for('make_posts') }}">Make your own posts here!</a></p>
+            {%from "_formhelpers.html" import render_field %}
+            <form method=post>
+                <dl>
+                    {{render_field(form.select)}}
+                    <p>
+                        {{render_field(form.search)}}
+                </dl>
+                <p><input type=submit value=Search>
+            </form>
+            {% if prev_url %}
+            <a href="{{ prev_url }}">Newer posts</a>
+            {% endif %}
+            {% if next_url %}
+            <a href="{{ next_url }}">Older posts</a>
+            {% endif %}
+        </right-sec>
+
+    </section>
 
 </body>
 {% endblock %}

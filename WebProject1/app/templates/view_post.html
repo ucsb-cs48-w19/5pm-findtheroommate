@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+
+<font size="5"> <a href="{{ url_for('user', username=posts.author.username) }}"> {{ posts.author.username }}'s post: </a> </font><br />
+<p style="margin-left:20px;margin-right:40px;word-wrap:break-word;word-break:break-all;width:550px">
+
+    <font size="4">Name: </font> <font size="3"><b>{{ posts.name }}</b> </font><br /> <!--<br /> New line-->
+    <font size="4">Email: </font> <font size="3"><b>{{ posts.email }}</b> </font><br />
+    <font size="4">Gender: </font> <font size="3"><b>{{ posts.gender }}</b> </font><br />
+    <font size="4">Contents: </font> <font size="3"><b>{{ posts.body }}</b> </font>
+
+</p>
+
+<hr>
+
+<p><font size="4">Comments:</font></p>
+    {% for comment in comments %}
+<a href="{{ url_for('user', username=comment.author) }}">{{ comment.author }} </a> says:<br />
+<b>{{ comment.content }}</b> <br />
+    {% endfor %}
+
+<br />
+<br />
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.content.label }}<br>
+        {{ form.content(cols=150, rows=7) }}<br> <!--Size-->
+        {% for error in form.content.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p align="center">{{ form.submit() }}</p> <!--Submit button-->
+</form>
+{% endblock %}

@@ -39,7 +39,7 @@
        <td>{% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}</td>
     </tr>
     <tr>
-       <td>{% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}</td>
+        <td>{% if user == current_user %}{% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}{% endif %}</td>
     </tr>
 </table>
 {% if user == current_user %} <!--The link will be showned only when you are the user for this page-->

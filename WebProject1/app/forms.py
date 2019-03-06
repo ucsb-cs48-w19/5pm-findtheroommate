@@ -47,7 +47,10 @@ class EditPostForm(FlaskForm): #Post Page, maybe error anyway
     body = TextAreaField('Enter your post: ', validators=[
         DataRequired(), Length(min=1, max=240)])
     submit = SubmitField('Submit')
-    
+
+class CommentForm(FlaskForm):
+    content = TextAreaField('Leave your comment!:  ', validators=[DataRequired(), Length(min=1, max=40)])
+    submit = SubmitField('Submit')  
 
 class PostForm(FlaskForm):
     name = TextAreaField('Name: ', validators=[

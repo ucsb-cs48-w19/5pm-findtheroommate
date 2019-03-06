@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 {%extends "base.html"%}
@@ -27,17 +27,20 @@
 <h1>Search Results</h1>
 <div class="container-fluid">
 
-    <div class="col-sm-9">
-    {% for result in results %}
-      <h4><small>{{ result.author.username }}'s post:</small></h4>
-      <hr>
-      <h3>Name: {{ result.name }}</h3>
-      <h4>E-mail: {{result.email}}</h4>
-      <h4><span class="label label-danger">{{result.gender}}</span>
-      <h4>Content: {{result.body}}</h4>
-      <br><br>
-      {%endfor%}
-      </div>
+    <div class="col-sm-9" style="word-wrap:break-word;word-break:break-all;width:550px">
+        {% for post in posts %}
+        <h3>Name: {{ post.name }}</h3>
+        <h4>E-mail: {{post.email}}</h4>
+        <h4>
+            <span class="label label-danger">{{post.gender}}</span>
+        </h4>
+        <h4>Content: {{post.body}}</h4>
+        <h4><a href="{{ url_for('view_post', id=post.id) }}">View</a> </h4>
+        <hr>
+        <h4 align="right"><small> <a href="{{ url_for('user', username=post.author.username) }}"> {{ post.author.username }}'s post: </a> </small></h4>
+        <br><br>
+        {%endfor%}
+    </div>
 </div>
 </section>
 </body>
