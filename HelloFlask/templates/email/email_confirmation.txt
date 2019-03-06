@@ -1,7 +1,0 @@
-Welcome! Thanks for signing up. Please follow this link to activate your account:
-
-{{ url_for('email_confirmation', token=token, _external=True) }}"
-        <!--Generating a dynamic, valid external link-->
-        click here
-
-Cheers!
