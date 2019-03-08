@@ -52,9 +52,12 @@
 ## Functionality
 
 * Register users with email confirmation needed
+* Reset password if needed
 * Log in user
 * Users can add/edit/delete posts
+* Users can comment on the post to communicate with people who make the post
 * Users have their own profile where all their own posts are listed
+* User can go to other user's profile and see all posts by this user
 * Users can search posts by username or gender
 * Log out
 
