@@ -10,9 +10,9 @@ class Config(object):
 
     #SECURITY_EMAIL_SENDER = 'valid_email@my_domain.com'
 
-    MAIL_SERVER = #os.environ.get('MAIL_SERVER')
-    MAIL_PORT = #int(os.environ.get('MAIL_PORT') or 25)
-    MAIL_USE_TLS = #os.environ.get('MAIL_USE_TLS') is not None
-    MAIL_USERNAME = #os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = #os.environ.get('MAIL_PASSWORD')
-    ADMINS = #placeholder
+    MAIL_SERVER = 'smtp.gmail.com' #os.environ.get('MAIL_SERVER')
+    MAIL_PORT = 587 #int(os.environ.get('MAIL_PORT') or 25)
+    MAIL_USE_TLS = 1 #os.environ.get('MAIL_USE_TLS') is not None
+    MAIL_USERNAME = 'findtheroommate@gmail.com' #os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = 'Find_cs48' #os.environ.get('MAIL_PASSWORD')
+    ADMINS = ['findtheroommate@gmail.com']
